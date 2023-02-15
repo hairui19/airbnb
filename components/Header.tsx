@@ -15,7 +15,7 @@ const Header = () => {
 
             {/* middle - search*/}
             <div className="flex items-center border-2 rounded-full py-2">
-                <input className="flex-grow pl-5 bg-transparent outline-none" type="text" placeholder="start your search"/>
+                <input className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" placeholder="start your search"/>
                 <MagnifyingGlassIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-2 cursor-pointer mx-2" />
             </div>
 

@@ -7,7 +7,7 @@ import { InferGetStaticPropsType } from 'next';
 import SmallCard from '../components/SmallCard'
 
 export interface ExploreItem {
-    image: string,
+    img: string,
     location: string,
     distance: string 
 }
@@ -54,14 +54,20 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
 
           {/* pull something from the server */}
-          { exploreData?.exploreItems.map( item => (
+         <div className='grid grid-cols-2
+         sm:grid-cols-2
+         lg:grid-cols-3
+         xl:grid-cols-4
+         '>
+         { exploreData?.exploreItems.map( item => (
             <SmallCard 
               key={`${item.location}-${item.distance}`}
-              image={item.image}
+              img={item.img}
               distance={item.distance}
               location={item.location}
             />
           ))}
+         </div>
         </section>
       </main>
     </div>

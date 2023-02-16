@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next'
 import Header from '../components/Header'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -6,14 +6,36 @@ import Banner from '../components/Banner'
 import { InferGetStaticPropsType } from 'next';
 
 interface ExploreItem {
-  image: string,
+    image: string,
     location: string,
     distance: string 
 }
 
 interface ExploreData {
-  items: ExploreItem[]
+  exploreItems: ExploreItem[]
 }
+
+export const getStaticProps: GetStaticProps<ExploreData> = async () => {
+
+  const https = require('https');
+  const agent = new https.Agent({
+  rejectUnauthorized: false
+  });
+
+  const response = await fetch('https://links.papareact.com/pyp', 
+  { 
+    agent,
+    method: 'GET',
+});
+  const exploreItems = await response.json();
+
+  return {
+    props: {
+      exploreItems,
+    },
+  };
+};
+
 
 const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
   return (
@@ -31,7 +53,7 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
 
           {/* pull something from the server */}
-          { exploreData.items.map( item => (
+          { exploreData.exploreItems.map( item => (
             <h1>{item.location}</h1>
           ))}
         </section>
@@ -42,17 +64,4 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
 
 export default Home
 
-export async function getStaticProps() {
-  const res = await fetch("https://links.papareact.com/pyp");
-  const exploreItems: ExploreItem[] = await res.json();
 
-  const exploreData: ExploreData = {
-    items: exploreItems
-  }
-
-  return {
-    props: {
-      exploreData
-    }
-  }
-}

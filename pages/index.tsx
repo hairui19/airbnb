@@ -58,8 +58,8 @@ const Home: NextPage<HomeData> = ( homeData : HomeData) => {
       <Header />
       <Banner />
 
-      <main className="max-w-7xl mx-auto px-8 sm:px-16 bg-red-300">
-        <section className='pt-6 bg-blue-300'>
+      <main className="max-w-7xl mx-auto px-8 sm:px-1">
+        <section className='pt-6'>
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
 
           {/* pull something from the server */}
@@ -82,13 +82,15 @@ const Home: NextPage<HomeData> = ( homeData : HomeData) => {
         {/* Live anywhere section */}
         <section>
           <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
-          {homeData.homeCards.map( homeCard => (
+          <div className='flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3'>
+          {homeData?.homeCards.map( homeCard => (
             <MediumCard 
             key={homeCard.title}
             img={homeCard.img}
             title={homeCard.title}
             />
           ))}
+          </div>
         </section>
       </main>
     </div>

@@ -12,33 +12,41 @@ export interface ExploreItem {
     distance: string 
 }
 
-interface ExploreData {
-  exploreItems: ExploreItem[]
+export interface HomeCards {
+  img: string,
+  title: string
 }
 
-export const getStaticProps: GetStaticProps<ExploreData> = async () => {
+interface HomeData {
+  exploreItems: ExploreItem[]
+  homeCards: HomeCards[] 
+}
+
+export const getStaticProps: GetStaticProps<HomeData> = async () => {
 
   const https = require('https');
   const agent = new https.Agent({
   rejectUnauthorized: false
   });
 
-  const response = await fetch('https://links.papareact.com/pyp', 
-  { 
+  const options = {
     agent,
     method: 'GET',
-});
-  const exploreItems = await response.json();
+  }
+
+  const exploreItems = await fetch('https://links.papareact.com/pyp', options).then(res => res.json());
+  const homeCards = await fetch('https://links.papareact.com/zp1', options).then(res => res.json())
 
   return {
     props: {
-      exploreItems,
+      exploreItems: exploreItems,
+      homeCards: homeCards
     },
   };
 };
 
 
-const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
+const Home: NextPage<HomeData> = ( homeData : HomeData) => {
   return (
     <div className="">
       <Head>
@@ -49,8 +57,8 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
       <Header />
       <Banner />
 
-      <main className="max-w-7xl mx-auto px-8 sm:px-16">
-        <section className='pt-6'>
+      <main className="max-w-7xl mx-auto px-8 sm:px-16 bg-red-300">
+        <section className='pt-6 bg-blue-300'>
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
 
           {/* pull something from the server */}
@@ -59,7 +67,7 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
          lg:grid-cols-3
          xl:grid-cols-4
          '>
-         { exploreData?.exploreItems.map( item => (
+         { homeData?.exploreItems.map( item => (
             <SmallCard 
               key={`${item.location}-${item.distance}`}
               img={item.img}
@@ -68,6 +76,16 @@ const Home: NextPage<ExploreData> = ( exploreData : ExploreData) => {
             />
           ))}
          </div>
+        </section>
+
+        {/* Live anywhere section */}
+        <section>
+          <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
+          {homeData.homeCards.map( homeCard => {
+            return (
+              <h1>{homeCard.title}</h1>
+            )
+          })}
         </section>
       </main>
     </div>

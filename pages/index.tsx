@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Banner from '../components/Banner'
 import { InferGetStaticPropsType } from 'next';
 import SmallCard from '../components/SmallCard'
+import MediumCard from '../components/MediumCard'
 
 export interface ExploreItem {
     img: string,
@@ -12,14 +13,14 @@ export interface ExploreItem {
     distance: string 
 }
 
-export interface HomeCards {
+export interface HomeCard {
   img: string,
   title: string
 }
 
 interface HomeData {
   exploreItems: ExploreItem[]
-  homeCards: HomeCards[] 
+  homeCards: HomeCard[] 
 }
 
 export const getStaticProps: GetStaticProps<HomeData> = async () => {
@@ -81,11 +82,13 @@ const Home: NextPage<HomeData> = ( homeData : HomeData) => {
         {/* Live anywhere section */}
         <section>
           <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
-          {homeData.homeCards.map( homeCard => {
-            return (
-              <h1>{homeCard.title}</h1>
-            )
-          })}
+          {homeData.homeCards.map( homeCard => (
+            <MediumCard 
+            key={homeCard.title}
+            img={homeCard.img}
+            title={homeCard.title}
+            />
+          ))}
         </section>
       </main>
     </div>

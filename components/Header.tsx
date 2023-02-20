@@ -5,8 +5,11 @@ import {
     Bars3Icon,
     UserCircleIcon
 } from '@heroicons/react/24/solid'
+import React from "react"
 
 const Header = () => {
+    const [searchInput, setSearchInput] = React.useState("")
+
     return (
         <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5">
             {/* left */}
@@ -20,7 +23,10 @@ const Header = () => {
 
             {/* middle - search*/}
             <div className="flex items-center border-2 rounded-full py-2">
-                <input className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" placeholder="start your search" />
+                <input
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" placeholder="start your search" />
                 <MagnifyingGlassIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-2 cursor-pointer mx-2" />
             </div>
 
@@ -34,7 +40,8 @@ const Header = () => {
                     <UserCircleIcon className="h-6" />
                 </div>
             </div>
-
+            
+            {searchInput && <h1>HELLO WORLD</h1>}
         </header>
     )
 }

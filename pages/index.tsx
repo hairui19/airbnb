@@ -6,11 +6,12 @@ import Banner from '../components/Banner'
 import { InferGetStaticPropsType } from 'next';
 import SmallCard from '../components/SmallCard'
 import MediumCard from '../components/MediumCard'
+import LargeCard from '../components/LargeCard'
 
 export interface ExploreItem {
-    img: string,
-    location: string,
-    distance: string 
+  img: string,
+  location: string,
+  distance: string
 }
 
 export interface HomeCard {
@@ -20,14 +21,14 @@ export interface HomeCard {
 
 interface HomeData {
   exploreItems: ExploreItem[]
-  homeCards: HomeCard[] 
+  homeCards: HomeCard[]
 }
 
 export const getStaticProps: GetStaticProps<HomeData> = async () => {
 
   const https = require('https');
   const agent = new https.Agent({
-  rejectUnauthorized: false
+    rejectUnauthorized: false
   });
 
   const options = {
@@ -47,7 +48,7 @@ export const getStaticProps: GetStaticProps<HomeData> = async () => {
 };
 
 
-const Home: NextPage<HomeData> = ( homeData : HomeData) => {
+const Home: NextPage<HomeData> = (homeData: HomeData) => {
   return (
     <div className="">
       <Head>
@@ -63,34 +64,44 @@ const Home: NextPage<HomeData> = ( homeData : HomeData) => {
           <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
 
           {/* pull something from the server */}
-         <div className='grid grid-cols-2
+          <div className='grid grid-cols-2
          sm:grid-cols-2
          lg:grid-cols-3
          xl:grid-cols-4
          '>
-         { homeData?.exploreItems.map( item => (
-            <SmallCard 
-              key={`${item.location}-${item.distance}`}
-              img={item.img}
-              distance={item.distance}
-              location={item.location}
-            />
-          ))}
-         </div>
+            {homeData?.exploreItems.map(item => (
+              <SmallCard
+                key={`${item.location}-${item.distance}`}
+                img={item.img}
+                distance={item.distance}
+                location={item.location}
+              />
+            ))}
+          </div>
         </section>
 
         {/* Live anywhere section */}
         <section>
           <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
           <div className='flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3'>
-          {homeData?.homeCards.map( homeCard => (
-            <MediumCard 
-            key={homeCard.title}
-            img={homeCard.img}
-            title={homeCard.title}
-            />
-          ))}
+            {homeData?.homeCards.map(homeCard => (
+              <MediumCard
+                key={homeCard.title}
+                img={homeCard.img}
+                title={homeCard.title}
+              />
+            ))}
           </div>
+        </section>
+
+        {/* The large card section */}
+        <section className='relative py-16 cursor-pointer'>
+          <LargeCard
+            img="https://links.papareact.com/4cj"
+            title="The Greatest Outdoors"
+            description='Wishlists curated by Airbnb.'
+            buttonText='Get Inspired'
+          />
         </section>
       </main>
     </div>

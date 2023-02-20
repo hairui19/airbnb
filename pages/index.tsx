@@ -7,6 +7,7 @@ import { InferGetStaticPropsType } from 'next';
 import SmallCard from '../components/SmallCard'
 import MediumCard from '../components/MediumCard'
 import LargeCard from '../components/LargeCard'
+import Footer from '../components/Footer'
 
 export interface ExploreItem {
   img: string,
@@ -104,6 +105,10 @@ const Home: NextPage<HomeData> = (homeData: HomeData) => {
           />
         </section>
       </main>
+
+      <Footer />
+
+
     </div>
   )
 }

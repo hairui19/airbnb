@@ -5,7 +5,16 @@ import {
     Bars3Icon,
     UserCircleIcon
 } from '@heroicons/react/24/solid'
-import React from "react"
+import React, { useState } from "react"
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange, DateRangePicker } from 'react-date-range'
+
+interface DateRangeState {
+    startDate: Date,
+    endDate: Date,
+    key: string
+}
 
 const Header = () => {
     const [searchInput, setSearchInput] = React.useState("")
@@ -40,9 +49,42 @@ const Header = () => {
                     <UserCircleIcon className="h-6" />
                 </div>
             </div>
-            
-            {searchInput && <h1>HELLO WORLD</h1>}
+
+            {searchInput && (
+                <div>
+                    <CustomDateRangePicker />
+                </div>
+            )}
         </header>
+    )
+}
+
+const CustomDateRangePicker: React.FC = () => {
+    const [dateRange, setDateRange] = useState<DateRangeState>({
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection"
+    })
+
+    const handleDateRangePickerChange = (ranges: any) => {
+        const { selection } = ranges
+        setDateRange({
+            startDate: selection.startDate,
+            endDate: selection.endDate,
+            key: "selection"
+        })
+    }
+
+    return (
+        <div>
+            <DateRangePicker
+                onChange={handleDateRangePickerChange}
+                moveRangeOnFirstSelection={false}
+                ranges={[dateRange]}
+                minDate={new Date()}
+                rangeColors={["#FD5B61"]}
+            />
+        </div>
     )
 }
 

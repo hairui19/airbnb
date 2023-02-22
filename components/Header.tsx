@@ -3,7 +3,8 @@ import {
     MagnifyingGlassIcon,
     GlobeAltIcon,
     Bars3Icon,
-    UserCircleIcon
+    UserCircleIcon,
+    UsersIcon,
 } from '@heroicons/react/24/solid'
 import React, { useState } from "react"
 import 'react-date-range/dist/styles.css'; // main style file
@@ -18,6 +19,7 @@ interface DateRangeState {
 
 const Header = () => {
     const [searchInput, setSearchInput] = React.useState("")
+    const resetSearch = () => { setSearchInput("") }
 
     return (
         <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5">
@@ -53,6 +55,8 @@ const Header = () => {
             {searchInput && (
                 <div className="flex flex-col col-span-3 mx-auto">
                     <CustomDateRangePicker />
+                    <GuestCounter />
+                    <CancelAndSearch resetSearch={resetSearch}/>
                 </div>
             )}
         </header>
@@ -83,6 +87,43 @@ const CustomDateRangePicker: React.FC = () => {
             minDate={new Date()}
             rangeColors={["#FD5B61"]}
         />
+    )
+}
+
+const GuestCounter = () => {
+    const [numberOfGuests, setNumberOfGuests] = React.useState(1)
+    return (
+        <div className="flex items-center border-b mb-4">
+            <h2 className="text-2xl font-semibold flex-grow">Number of Guests</h2>
+            <UsersIcon className="h-5" />
+            <input
+                value={numberOfGuests}
+                onChange={event => setNumberOfGuests(parseInt(event.target.value, 10))}
+                min={1}
+                type="number"
+                className="w-12 pl-2 text-lg outline-none text-red-400"
+            />
+        </div>
+    )
+}
+
+interface ResetSearch {
+    resetSearch: () => void
+}
+
+const CancelAndSearch = ({resetSearch}: ResetSearch) => {
+    return (
+        <div className="flex">
+            <button
+                className="flex-grow text-gray-500"
+                onClick={resetSearch}>
+                Cancel
+            </button>
+            <button
+                className="flex-grow text-red-400">
+                Search
+            </button>
+        </div>
     )
 }
 

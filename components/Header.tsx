@@ -51,7 +51,7 @@ const Header = () => {
             </div>
 
             {searchInput && (
-                <div>
+                <div className="flex flex-col col-span-3 mx-auto">
                     <CustomDateRangePicker />
                 </div>
             )}
@@ -76,15 +76,13 @@ const CustomDateRangePicker: React.FC = () => {
     }
 
     return (
-        <div>
-            <DateRangePicker
-                onChange={handleDateRangePickerChange}
-                moveRangeOnFirstSelection={false}
-                ranges={[dateRange]}
-                minDate={new Date()}
-                rangeColors={["#FD5B61"]}
-            />
-        </div>
+        <DateRangePicker
+            onChange={handleDateRangePickerChange}
+            moveRangeOnFirstSelection={false}
+            ranges={[dateRange]}
+            minDate={new Date()}
+            rangeColors={["#FD5B61"]}
+        />
     )
 }
 

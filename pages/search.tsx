@@ -2,8 +2,10 @@ import { useRouter } from "next/router"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import { format } from "date-fns"
+import { GetServerSideProps } from "next"
 
-const Search = () => {
+const Search = ({ searchResults }: Props) => {
+    console.log("hello world" + searchResults)
     const router = useRouter();
     const { location, startDate, endDate, numberOfGuests } = router.query
 
@@ -31,6 +33,10 @@ const Search = () => {
                         <SearchFilter title="Rooms and Beds" />
                         <SearchFilter title="More filters" />
                     </div>
+
+                    {searchResults.map(searchResult => {
+
+                    })}
                 </section>
             </main>
             <Footer />
@@ -51,6 +57,42 @@ const SearchFilter = ({ title }: SearchFilterProps) => {
             {title}
         </p>
     )
+}
+
+interface Props {
+    searchResults: SearchResult[]
+}
+
+interface SearchResult {
+    img: string,
+    location: string,
+    title: string,
+    description: string,
+    star: number,
+    price: string,
+    total: string,
+    long: number,
+    lat: number
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+    const https = require('https');
+    const agent = new https.Agent({
+        rejectUnauthorized: false
+    });
+
+    const options = {
+        agent,
+        method: 'GET',
+    }
+
+    const searchResults = await fetch("https://links.papareact.com/isz", options).then(res => res.json());
+
+    return {
+        props: {
+            searchResults: searchResults
+        }
+    }
 }
 
 export default Search

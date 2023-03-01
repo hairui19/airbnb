@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react"
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRange, DateRangePicker } from 'react-date-range'
+import { DateRangePicker, RangeKeyDict, Range } from 'react-date-range'
 import { useRouter } from "next/router";
 
 interface DateRangeState {
@@ -20,13 +20,25 @@ interface DateRangeState {
 
 const Header = () => {
     const [searchInput, setSearchInput] = React.useState("")
+
+    const [dateRange, setDateRange] = React.useState({
+        startDate: new Date(),
+        endDate: new Date(),
+    })
+    const onDatesChange = ({ startDate, endDate }: DateRange) => {
+        setDateRange({
+            startDate: startDate,
+            endDate: endDate
+        })
+    }
+
     const resetSearch = () => { setSearchInput("") }
     const router = useRouter();
 
     return (
         <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5">
             {/* left */}
-            <div onClick={ () => router.push("/")} className="relative flex items-center h-10 cursor-pointer my-auto">
+            <div onClick={() => router.push("/")} className="relative flex items-center h-10 cursor-pointer my-auto">
                 <Image src="https://links.papareact.com/qd3"
                     layout="fill"
                     objectFit="contain"
@@ -56,28 +68,44 @@ const Header = () => {
 
             {searchInput && (
                 <div className="flex flex-col col-span-3 mx-auto">
-                    <CustomDateRangePicker />
+                    <CustomDateRangePicker
+                        startDate={dateRange.startDate}
+                        endDate={dateRange.endDate}
+                        onChange={onDatesChange} />
                     <GuestCounter />
-                    <CancelAndSearch resetSearch={resetSearch}/>
+                    <CancelAndSearch resetSearch={resetSearch} />
                 </div>
             )}
         </header>
     )
 }
 
-const CustomDateRangePicker: React.FC = () => {
-    const [dateRange, setDateRange] = useState<DateRangeState>({
-        startDate: new Date(),
-        endDate: new Date(),
-        key: "selection"
-    })
+interface DateRange {
+    startDate: Date,
+    endDate: Date
+}
 
-    const handleDateRangePickerChange = (ranges: any) => {
+interface DateRangePickerProps {
+    startDate: Date,
+    endDate: Date,
+    onChange: ({ startDate, endDate }: DateRange) => void
+}
+
+const CustomDateRangePicker: React.FC<DateRangePickerProps> = ({
+    startDate,
+    endDate,
+    onChange
+}) => {
+    const ranges = {
+        startDate: startDate,
+        endDate: endDate,
+        key: "selection"
+    }
+    const handleDateRangePickerChange = (ranges: RangeKeyDict) => {
         const { selection } = ranges
-        setDateRange({
-            startDate: selection.startDate,
-            endDate: selection.endDate,
-            key: "selection"
+        onChange({
+            startDate: selection.startDate!,
+            endDate: selection.endDate!,
         })
     }
 
@@ -85,7 +113,7 @@ const CustomDateRangePicker: React.FC = () => {
         <DateRangePicker
             onChange={handleDateRangePickerChange}
             moveRangeOnFirstSelection={false}
-            ranges={[dateRange]}
+            ranges={[ranges]}
             minDate={new Date()}
             rangeColors={["#FD5B61"]}
         />
@@ -113,7 +141,7 @@ interface ResetSearch {
     resetSearch: () => void
 }
 
-const CancelAndSearch = ({resetSearch}: ResetSearch) => {
+const CancelAndSearch = ({ resetSearch }: ResetSearch) => {
     return (
         <div className="flex">
             <button

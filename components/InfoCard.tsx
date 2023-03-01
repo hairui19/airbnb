@@ -26,6 +26,7 @@ const InfoCard = ({
                     src={img}
                     layout="fill"
                     objectFit="cover"
+                    className="rounded-2xl"
                 />
             </div>
 

@@ -3,6 +3,7 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import { format } from "date-fns"
 import { GetServerSideProps } from "next"
+import InfoCard from "../components/InfoCard"
 
 const Search = ({ searchResults }: Props) => {
     console.log("hello world" + searchResults)
@@ -34,9 +35,24 @@ const Search = ({ searchResults }: Props) => {
                         <SearchFilter title="More filters" />
                     </div>
 
-                    {searchResults.map(searchResult => {
-
-                    })}
+                    <div className="flex flex-col">
+                        {searchResults.map(searchResult => {
+                            return (
+                                <InfoCard
+                                    key={`${searchResult.long}-${searchResult.lat}`}
+                                    img={searchResult.img}
+                                    location={searchResult.location}
+                                    title={searchResult.title}
+                                    description={searchResult.description}
+                                    star={searchResult.star}
+                                    price={searchResult.price}
+                                    total={searchResult.total}
+                                    long={searchResult.long}
+                                    lat={searchResult.lat}
+                                />
+                            )
+                        })}
+                    </div>
                 </section>
             </main>
             <Footer />
@@ -63,7 +79,7 @@ interface Props {
     searchResults: SearchResult[]
 }
 
-interface SearchResult {
+export interface SearchResult {
     img: string,
     location: string,
     title: string,

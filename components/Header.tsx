@@ -25,7 +25,7 @@ const Header = () => {
         startDate: new Date(),
         endDate: new Date(),
     })
-    const onDatesChange = ({ startDate, endDate }: DateRange) => {
+    const onDatesChange = (startDate: Date, endDate: Date) => {
         setDateRange({
             startDate: startDate,
             endDate: endDate
@@ -104,7 +104,7 @@ interface DateRange {
 interface DateRangePickerProps {
     startDate: Date,
     endDate: Date,
-    onChange: ({ startDate, endDate }: DateRange) => void
+    onChange: (startDate: Date, endDate: Date) => void
 }
 
 const CustomDateRangePicker: React.FC<DateRangePickerProps> = ({
@@ -119,10 +119,7 @@ const CustomDateRangePicker: React.FC<DateRangePickerProps> = ({
     }
     const handleDateRangePickerChange = (ranges: RangeKeyDict) => {
         const { selection } = ranges
-        onChange({
-            startDate: selection.startDate!,
-            endDate: selection.endDate!,
-        })
+        onChange(selection.startDate!, selection.endDate!)
     }
 
     return (

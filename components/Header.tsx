@@ -32,6 +32,11 @@ const Header = () => {
         })
     }
 
+    const [numberOfGuests, setNumberOfGuests] = React.useState(1)
+    const onNumberOfGuestsChange = (numberOfGuests: number) => {
+        setNumberOfGuests(numberOfGuests)
+    }
+
     const resetSearch = () => { setSearchInput("") }
     const router = useRouter();
     const onSearch = () => {
@@ -41,6 +46,7 @@ const Header = () => {
                 location: searchInput,
                 startDate: dateRange.startDate.toISOString(),
                 endDate: dateRange.endDate.toISOString(),
+                numberOfGuests: numberOfGuests
             }
         })
     }
@@ -82,7 +88,7 @@ const Header = () => {
                         startDate={dateRange.startDate}
                         endDate={dateRange.endDate}
                         onChange={onDatesChange} />
-                    <GuestCounter />
+                    <GuestCounter numberOfGuests={numberOfGuests} onChange={onNumberOfGuestsChange} />
                     <CancelAndSearch resetSearch={resetSearch} onSearch={onSearch} />
                 </div>
             )}
@@ -130,15 +136,19 @@ const CustomDateRangePicker: React.FC<DateRangePickerProps> = ({
     )
 }
 
-const GuestCounter = () => {
-    const [numberOfGuests, setNumberOfGuests] = React.useState(1)
+interface GuestCounterProps {
+    numberOfGuests: number,
+    onChange: (numberOfGuests: number) => void
+}
+
+const GuestCounter = ({ numberOfGuests, onChange }: GuestCounterProps) => {
     return (
         <div className="flex items-center border-b mb-4">
             <h2 className="text-2xl font-semibold flex-grow">Number of Guests</h2>
             <UsersIcon className="h-5" />
             <input
                 value={numberOfGuests}
-                onChange={event => setNumberOfGuests(parseInt(event.target.value, 10))}
+                onChange={event => onChange(parseInt(event.target.value, 10))}
                 min={1}
                 type="number"
                 className="w-12 pl-2 text-lg outline-none text-red-400"

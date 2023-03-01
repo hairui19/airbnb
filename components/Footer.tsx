@@ -11,9 +11,10 @@ const footerElements = [
 const Footer = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 px-32 py-14 bg-gray-100 text-gray-600">
-            {footerElements.map(footerElement => {
+            {footerElements.map((footerElement, index) => {
                 return (
                     <FooterElement
+                        key={index}
                         title={footerElement.title}
                         elements={footerElement.elements}
                     />

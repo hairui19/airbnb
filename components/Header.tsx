@@ -34,6 +34,16 @@ const Header = () => {
 
     const resetSearch = () => { setSearchInput("") }
     const router = useRouter();
+    const onSearch = () => {
+        router.push({
+            pathname: "/search",
+            query: {
+                location: searchInput,
+                startDate: dateRange.startDate.toISOString(),
+                endDate: dateRange.endDate.toISOString(),
+            }
+        })
+    }
 
     return (
         <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5">
@@ -73,7 +83,7 @@ const Header = () => {
                         endDate={dateRange.endDate}
                         onChange={onDatesChange} />
                     <GuestCounter />
-                    <CancelAndSearch resetSearch={resetSearch} />
+                    <CancelAndSearch resetSearch={resetSearch} onSearch={onSearch} />
                 </div>
             )}
         </header>
@@ -137,11 +147,12 @@ const GuestCounter = () => {
     )
 }
 
-interface ResetSearch {
+interface CancelAndSearchProps {
     resetSearch: () => void
+    onSearch: () => void
 }
 
-const CancelAndSearch = ({ resetSearch }: ResetSearch) => {
+const CancelAndSearch = ({ resetSearch, onSearch }: CancelAndSearchProps) => {
     return (
         <div className="flex">
             <button
@@ -149,7 +160,7 @@ const CancelAndSearch = ({ resetSearch }: ResetSearch) => {
                 onClick={resetSearch}>
                 Cancel
             </button>
-            <button
+            <button onClick={onSearch}
                 className="flex-grow text-red-400">
                 Search
             </button>

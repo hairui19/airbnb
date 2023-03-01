@@ -18,7 +18,11 @@ interface DateRangeState {
     key: string
 }
 
-const Header = () => {
+interface HeaderProps {
+    placeholder?: string
+}
+
+const Header = ({placeholder} : HeaderProps ) => {
     const [searchInput, setSearchInput] = React.useState("")
 
     const [dateRange, setDateRange] = React.useState({
@@ -67,7 +71,7 @@ const Header = () => {
                 <input
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" placeholder="start your search" />
+                    className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" type="text" placeholder={placeholder || "start your search"}/>
                 <MagnifyingGlassIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-2 cursor-pointer mx-2" />
             </div>
 

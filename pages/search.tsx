@@ -13,7 +13,7 @@ const Search = () => {
 
     return (
         <div>
-            <Header />
+            <Header placeholder={`${location} | ${range} | ${numberOfGuests}`} />
             <main className="flex">
                 <section className="flex-grow pt-14 px-6">
                     <p className="text-xs">

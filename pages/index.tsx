@@ -8,6 +8,7 @@ import SmallCard from '../components/SmallCard'
 import MediumCard from '../components/MediumCard'
 import LargeCard from '../components/LargeCard'
 import Footer from '../components/Footer'
+import ReviewCard from '../components/ReviewCard'
 
 export interface ExploreItem {
   img: string,
@@ -86,9 +87,10 @@ const Home: NextPage<HomeData> = (homeData: HomeData) => {
           <h2 className='text-4xl font-semibold py-8'>Live Anywhere</h2>
           <div className='flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3'>
             {homeData?.homeCards.map(homeCard => (
-              <MediumCard
+              <ReviewCard
                 key={homeCard.title}
-                img={homeCard.img}
+                imageURL={homeCard.img}
+                username={"Hairuilin"}
                 title={homeCard.title}
               />
             ))}

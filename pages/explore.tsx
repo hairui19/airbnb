@@ -16,7 +16,7 @@ const Explore = () => {
         <div>
             <Header />
             <main className=" max-w-7xl mx-auto px-8 sm:px-1 pt-2">
-                <div className="grid grid-cols-3 gap-y-12">
+                <div className="inline-grid grid-cols-3 grid-flow-auto gap-y-12 gap-x-11 auto-cols-max">
                     {reviews.map(review => {
                         return (
                             <ReviewCard

@@ -21,7 +21,7 @@ const ReviewCard = ({ imageURL, username, title }: ReviewCardProps) => {
                     src={imageURL}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-xl"
+                    className=" rounded-sm"
                 />
             </div>
 

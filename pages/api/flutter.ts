@@ -27,23 +27,37 @@ export default async function handler(
       "Access-Control-Request-Headers": "*",
       "api-key": process.env.MONGODB_DATA_API_KEY,
     },
-    body: JSON.stringify({
-      dataSource: process.env.MONGODB_DATA_SOURCE,
-      database: "REVIEW_BUTTERFLY",
-      collection: "reviews",
-    }),
+    body: JSON.stringify(),
   };
+
+  const fetchBody = {
+    dataSource: process.env.MONGODB_DATA_SOURCE,
+    database: "REVIEW_BUTTERFLY",
+    collection: "reviews",
+  };
+
   try {
     switch (req.method) {
       case "GET":
-        const readDataJson = await fetch(`${baseUrl}/find`, options).then(
-          (res) => res.json()
-        );
+        const readDataJson = await fetch(`${baseUrl}/find`, {
+          ...fetchOptions,
+          body: JSON.stringify({
+            ...fetchBody,
+          }),
+        }).then((res) => res.json());
         res.status(200).json(readDataJson.documents);
         break;
       case "POST":
         const review = req.body;
-        const insertData = await fetch(`${baseUrl}/insertOne`, {});
+        const insertData = await fetch(`${baseUrl}/insertOne`, {
+          ...fetchOptions,
+          body: JSON.stringify({
+            ...fetchBody,
+            document: review,
+          }),
+        });
+        const insertDataJson = await insertData.json();
+        res.status(200).json(insertDataJson);
         break;
       default:
         res.status(405).end();

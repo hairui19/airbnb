@@ -20,16 +20,6 @@ export default async function handler(
 
   const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      "Access-Control-Request-Headers": "*",
-      "api-key": process.env.MONGODB_DATA_API_KEY,
-    },
-    body: JSON.stringify(),
-  };
-
   const fetchBody = {
     dataSource: process.env.MONGODB_DATA_SOURCE,
     database: "REVIEW_BUTTERFLY",

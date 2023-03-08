@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["links.papareact.com", "https://data.mongodb-api.com"]
+    domains: ["links.papareact.com", "https://data.mongodb-api.com", "lh3.googleusercontent.com"]
   }
 }

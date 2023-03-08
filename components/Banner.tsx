@@ -27,7 +27,7 @@ const Banner = () => {
                 my-3
                 hover:shadow-xl
                 active:scale-90
-                transition duration-150">I'm flexible</button>
+                transition duration-150">I'm asdasdasdasdasds</button>
             </div>
         </div>
     )

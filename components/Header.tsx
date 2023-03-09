@@ -86,7 +86,13 @@ const Header = ({ placeholder }: HeaderProps) => {
             ) : (
                 <div className="flex items-center space-x-4 justify-end text-gray-500">
                     <p onClick={() => signOut()} className="md:inline cursor-pointer">Logout</p>
-                    <div className="relative h-6 w-6"><Image src={session?.user?.image} layout="fill" objectFit="cover" className=" rounded-full" /></div>
+                    <div className="relative h-6 w-6">
+                        <Image 
+                        src={session?.user?.image || ""} 
+                        layout="fill" 
+                        objectFit="cover" 
+                        className=" rounded-full" />
+                    </div>
                 </div>
             )}
 

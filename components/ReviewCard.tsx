@@ -37,8 +37,8 @@ const ReviewCard = ({ imageURL, username, title }: ReviewCardProps) => {
                     <h3 className=" p-1">{username}</h3>
 
                     <div className="flex space-x-1 ">
-                        {Array(numberOfRatings).fill(null).map(_ =>
-                            <StarIconSolid className="h-6" />
+                        {Array(numberOfRatings).fill(null).map( (_, index) =>
+                            <StarIconSolid key={index} className="h-6" />
                         )}
                     </div>
                 </div>

@@ -1,8 +1,7 @@
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 interface Review {
-  id: string;
   username: string;
   userProfileImageUrl: string;
   itemImageUrl: string;
@@ -10,16 +9,18 @@ interface Review {
   itemReview: string;
 }
 
-class ReviewsService {
-  private static REVIEW_COLLECTION_REF = collection(db, "reviews");
+const reviewCollectionRef = collection(db, "reviews");
 
-  async getReviews(): Promise<Review[]> {
-    return getDocs(ReviewsService.REVIEW_COLLECTION_REF).then((snapshot) => {
-      return snapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id } as Review;
-      });
+export const getReviews = async (): Promise<[string, Review][]> => {
+  return getDocs(reviewCollectionRef).then((snapshot) => {
+    return snapshot.docs.map((doc) => {
+      return [doc.id, { ...doc.data() } as Review];
     });
-  }
-}
+  });
+};
 
-export default new ReviewsService();
+export const addReview = async (review: Review): Promise<string> => {
+  return addDoc(reviewCollectionRef, review).then((document) => {
+    return document.id;
+  });
+};

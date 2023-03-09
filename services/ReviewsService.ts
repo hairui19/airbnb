@@ -14,13 +14,11 @@ class ReviewsService {
   private static REVIEW_COLLECTION_REF = collection(db, "reviews");
 
   async getReviews(): Promise<Review[]> {
-    return await getDocs(ReviewsService.REVIEW_COLLECTION_REF).then(
-      (snapshot) => {
-        return snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id } as Review
-        });
-      }
-    );
+    return getDocs(ReviewsService.REVIEW_COLLECTION_REF).then((snapshot) => {
+      return snapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id } as Review;
+      });
+    });
   }
 }
 

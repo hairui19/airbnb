@@ -1,8 +1,24 @@
 import { getSession } from "next-auth/react";
 import { GetServerSidePropsContext } from 'next'
+import { ChangeEvent, useState } from "react";
+import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase";
+import { uuidv4 } from "@firebase/util";
 
+ 
 const PostReview = () => {
+    const [imageUpload, setImageUpload] = useState<File | undefined>()
+    const handleSelectedImage = (event: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files && event.target.files[0]
+        setImageUpload(selectedFile ?? undefined)
+    }
 
+    const handleUploadImage = () => {
+        if (imageUpload === undefined) return
+        const storageRef = ref(storage, "images/" + `${uuidv4()}`)
+        console.log("triggering upload image")
+        uploadBytes(storageRef, imageUpload)
+    }
 
     const onSubmitFlutter = async (value: string) => {
         const review = {
@@ -29,24 +45,26 @@ const PostReview = () => {
     return (
         <div className="flex items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pb-5 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-                
+
                 <div>
                     <div className="mt-3 text-center sm:mt-5">
                         Upload A Photo
                     </div>
 
                     <div>
-                        <input type="file" />
+                        <input type="file"
+                            onChange={handleSelectedImage}
+                        />
                     </div>
 
                     <div className="mt-2">
-                        <input type="text" className="border-none focus:ring-0 w-full text-center min-h-[500px]" placeholder="Please enter a review"/>
+                        <input type="text" className="border-none focus:ring-0 w-full text-center min-h-[500px]" placeholder="Please enter a review" />
                     </div>
                 </div>
 
                 <div className="mt-5 sm:mt-6">
-                    <button type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm disabled:bg-gray-300 disabled:cursor-not-allowed disabled:bg-gray-300">
+                    <button onClick={handleUploadImage} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
+                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm disabled:cursor-not-allowed disabled:bg-gray-300">
                         Upload Review
                     </button>
                 </div>
@@ -69,7 +87,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
 
     return {
-        props : {
+        props: {
             session
         }
     }

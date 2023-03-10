@@ -1,5 +1,7 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../firebase";
+import { uuidv4 } from "@firebase/util";
 
 export interface Review {
   username: string;
@@ -10,6 +12,7 @@ export interface Review {
 }
 
 const reviewCollectionRef = collection(db, "reviews");
+const reivewImageDir = "review_images/";
 
 export const getReviews = async (): Promise<[string, Review][]> => {
   return getDocs(reviewCollectionRef).then((snapshot) => {
@@ -19,8 +22,26 @@ export const getReviews = async (): Promise<[string, Review][]> => {
   });
 };
 
-export const addReview = async (review: Review): Promise<string> => {
-  return addDoc(reviewCollectionRef, review).then((document) => {
+export const uploadReview = async (
+  username: string,
+  userProfileImageUrl: string,
+  itemImage: File,
+  itemRating: number,
+  itemReview: string
+): Promise<string> => {
+  const storageRef = ref(storage, reivewImageDir + `${uuidv4()}`);
+  const itemImageUrl = await uploadBytes(storageRef, itemImage).then(
+    (snapshot) => {
+      return getDownloadURL(snapshot.ref);
+    }
+  );
+  return addDoc(reviewCollectionRef, {
+    username: username,
+    userProfileImageUrl: userProfileImageUrl,
+    itemImageUrl: itemImageUrl,
+    itemRating: itemRating,
+    itemReview: itemReview,
+  }).then((document) => {
     return document.id;
   });
 };

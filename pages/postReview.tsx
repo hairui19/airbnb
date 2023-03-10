@@ -1,11 +1,12 @@
 import { getSession } from "next-auth/react";
 import { GetServerSidePropsContext } from 'next'
 import { ChangeEvent, useState } from "react";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { uuidv4 } from "@firebase/util";
+import { uploadReview } from "../services/ReviewsService";
 
- 
+
 const PostReview = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>()
     const handleSelectedImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,9 +16,13 @@ const PostReview = () => {
 
     const handleUploadImage = () => {
         if (imageUpload === undefined) return
-        const storageRef = ref(storage, "images/" + `${uuidv4()}`)
-        console.log("triggering upload image")
-        uploadBytes(storageRef, imageUpload)
+        const id = uploadReview(
+            "hairuilin",
+            "random image",
+            imageUpload,
+            1,
+            "hairui's random post",
+        )
     }
 
     const onSubmitFlutter = async (value: string) => {

@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { uploadReview } from "../services/ReviewsService";
 import { useRouter } from "next/router";
 import { getUserSession } from "../users/session";
+import ImagePreview from "../components/ImagePreview";
 
 
 const PostReview = () => {
@@ -11,14 +12,13 @@ const PostReview = () => {
     const router = useRouter()
     if (userSession === null) router.push("/accounts/login")
 
-    const [imageUpload, setImageUpload] = useState<File | undefined>()
-    const handleSelectedImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files && event.target.files[0]
-        setImageUpload(selectedFile ?? undefined)
+    const [imageUpload, setImageUpload] = useState<File | null>(null);
+    const handleImageSelect = (image: File) => {
+        setImageUpload(image);
     }
 
     const handleUploadImage = () => {
-        if (imageUpload === undefined) return
+        if (imageUpload === null) return
         const id = uploadReview(
             userSession!.user.username,
             userSession!.user.userProfileImageUrl,
@@ -38,10 +38,18 @@ const PostReview = () => {
                     </div>
 
                     <div>
-                        <input type="file"
-                            onChange={handleSelectedImage}
-                        />
+                        <ImagePreview onImageSelect={handleImageSelect} />
                     </div>
+
+                    {/* {imageUpload === undefined ?
+                        (<div>
+                            <input type="file"
+                                onChange={handleSelectedImage}
+                            />
+                        </div>) :
+                        (<div>
+                            <img src={imageUpload} alt="" />
+                        </div>)} */}
 
                     <div className="mt-2">
                         <input type="text" className="border-none focus:ring-0 w-full text-center min-h-[500px]" placeholder="Please enter a review" />
@@ -49,7 +57,7 @@ const PostReview = () => {
                 </div>
 
                 <div className="mt-5 sm:mt-6">
-                    <button onClick={handleUploadImage} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
+                    <button onClick={handleUploadImage} disabled={!imageUpload} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm disabled:cursor-not-allowed disabled:bg-gray-300">
                         Upload Review
                     </button>

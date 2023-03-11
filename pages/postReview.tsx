@@ -17,6 +17,11 @@ const PostReview = () => {
         setImageUpload(image);
     }
 
+    const [reviewtext, setReviewText] = useState('');
+    const handleReviewText = (event: React.FormEvent<HTMLTextAreaElement>) => {
+        setReviewText(event.currentTarget.value)
+    }
+
     const handleUploadImage = () => {
         if (imageUpload === null) return
         const id = uploadReview(
@@ -24,7 +29,7 @@ const PostReview = () => {
             userSession!.user.userProfileImageUrl,
             imageUpload,
             1,
-            "hairui's random post",
+            reviewtext,
         )
     }
 
@@ -41,19 +46,11 @@ const PostReview = () => {
                         <ImagePreview onImageSelect={handleImageSelect} />
                     </div>
 
-                    {/* {imageUpload === undefined ?
-                        (<div>
-                            <input type="file"
-                                onChange={handleSelectedImage}
-                            />
-                        </div>) :
-                        (<div>
-                            <img src={imageUpload} alt="" />
-                        </div>)} */}
-
-                    <div className="mt-2">
-                        <input type="text" className="border-none focus:ring-0 w-full text-center min-h-[500px]" placeholder="Please enter a review" />
-                    </div>
+                    <textarea
+                        className="mt-2 h-100 border border-gray-300 rounded-lg p-2 w-full"
+                        placeholder="Please enter your review here"
+                        onInput={handleReviewText}
+                    ></textarea>
                 </div>
 
                 <div className="mt-5 sm:mt-6">

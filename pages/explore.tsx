@@ -11,7 +11,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
     return (
         <div>
             <Header />
-            <main className=" max-w-7xl mx-auto px-8 sm:px-1 pt-2 flex justify-center">
+            <main className=" max-w-7xl mx-auto px-8 sm:px-1 pt-6 flex justify-center">
                 <div className="inline-grid grid-cols-3 grid-flow-auto gap-x-[1.5rem] auto-cols-max">
                     {/** Flex boxes */}
                     <div className="inline-flex flex-col gap-10">

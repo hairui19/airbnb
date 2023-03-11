@@ -8,30 +8,60 @@ interface ExplorePageProps {
 }
 
 const Explore = ({ reviews }: ExplorePageProps) => {
-    // const reviews = [
-    //     { imageURL: "https://links.papareact.com/2io", username: "", title: "", },
-    //     { imageURL: "https://links.papareact.com/q7j", username: "", title: "", },
-    //     { imageURL: "https://links.papareact.com/s03", username: "", title: "", },
-    //     { imageURL: "https://links.papareact.com/8ix", username: "", title: "", }
-    // ]
-    console.log("hello world", reviews)
     return (
         <div>
             <Header />
             <main className=" max-w-7xl mx-auto px-8 sm:px-1 pt-2 flex justify-center">
                 <div className="inline-grid grid-cols-3 grid-flow-auto gap-y-12 gap-x-4 auto-cols-max">
-                    {reviews.map((review) => {
-                        return (
-                            <ReviewCard
-                                key={review[0]}
-                                username={review[1].username}
-                                userProfileImageUrl={review[1].userProfileImageUrl}
-                                itemImageUrl={review[1].itemImageUrl}
-                                itemRating={review[1].itemRating}
-                                itemReview={review[1].itemReview}
-                            />
-                        )
-                    })}
+                    {/** Flex boxes */}
+                    <div className="flex-inline flex-col">
+                        {reviews
+                            .filter((_, index) => index % 3 == 0)
+                            .map((review) => {
+                                return (
+                                    <ReviewCard
+                                        key={review[0]}
+                                        username={review[1].username}
+                                        userProfileImageUrl={review[1].userProfileImageUrl}
+                                        itemImageUrl={review[1].itemImageUrl}
+                                        itemRating={review[1].itemRating}
+                                        itemReview={review[1].itemReview}
+                                    />
+                                )
+                            })}
+                    </div>
+                    <div className="flex-inline flex-col">
+                        {reviews
+                            .filter((_, index) => index % 3 == 1)
+                            .map((review) => {
+                                return (
+                                    <ReviewCard
+                                        key={review[0]}
+                                        username={review[1].username}
+                                        userProfileImageUrl={review[1].userProfileImageUrl}
+                                        itemImageUrl={review[1].itemImageUrl}
+                                        itemRating={review[1].itemRating}
+                                        itemReview={review[1].itemReview}
+                                    />
+                                )
+                            })}
+                    </div>
+                    <div className="flex-inline flex-col">
+                        {reviews
+                            .filter((_, index) => index % 3 == 2)
+                            .map((review) => {
+                                return (
+                                    <ReviewCard
+                                        key={review[0]}
+                                        username={review[1].username}
+                                        userProfileImageUrl={review[1].userProfileImageUrl}
+                                        itemImageUrl={review[1].itemImageUrl}
+                                        itemRating={review[1].itemRating}
+                                        itemReview={review[1].itemReview}
+                                    />
+                                )
+                            })}
+                    </div>
                 </div>
             </main>
         </div>

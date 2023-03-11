@@ -13,7 +13,8 @@ interface ReviewCardProps {
     title: string,
 }
 
-const ReviewCard = ({ username,
+const ReviewCard = ({
+    username,
     userProfileImageUrl,
     itemImageUrl,
     itemRating,
@@ -31,9 +32,10 @@ const ReviewCard = ({ username,
             </div>
 
             <div className="flex flex-col items-center absolute top-72 left-1/2 transform -translate-x-1/2">
+                {/* User profile picture */}
                 <div className="relative h-12 w-12 border-2 border-white rounded-full">
                     <Image
-                        src={itemImageUrl}
+                        src={userProfileImageUrl}
                         layout="fill"
                         className="rounded-full"
                     />

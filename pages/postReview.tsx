@@ -1,13 +1,18 @@
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { GetServerSidePropsContext } from 'next'
 import { ChangeEvent, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { uuidv4 } from "@firebase/util";
 import { uploadReview } from "../services/ReviewsService";
+import { useRouter } from "next/router";
 
 
 const PostReview = () => {
+    const { data: session }  = useSession()
+    const router = useRouter()
+    if (session === null)  router.push("/accounts/login")
+
     const [imageUpload, setImageUpload] = useState<File | undefined>()
     const handleSelectedImage = (event: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files && event.target.files[0]
@@ -18,35 +23,13 @@ const PostReview = () => {
         if (imageUpload === undefined) return
         const id = uploadReview(
             "hairuilin",
-            "random image",
+            session?.user?.image ?? "placeholder image",
             imageUpload,
             1,
             "hairui's random post",
         )
     }
-
-    const onSubmitFlutter = async (value: string) => {
-        const review = {
-            postedAt: Date.now(),
-            body: value,
-            user: {
-                id: 123123123123,
-                name: "hairuilin",
-                nickname: "hairuilin",
-                picture: "no picture",
-            },
-        };
-        const response = await fetch("/api/flutter", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(review),
-        });
-
-        const responseJson = await response.json();
-    };
-
+    
     return (
         <div className="flex items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pb-5 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">

@@ -42,7 +42,6 @@ export default Explore
 
 export const getServerSideProps: GetServerSideProps<ExplorePageProps> = async () => {
     const reviews = await getReviews()
-    console.log("hello world what the hell", reviews)
     return {
         props: {
             reviews: reviews

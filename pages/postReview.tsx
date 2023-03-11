@@ -6,12 +6,13 @@ import { storage } from "../firebase";
 import { uuidv4 } from "@firebase/util";
 import { uploadReview } from "../services/ReviewsService";
 import { useRouter } from "next/router";
+import { getUserSession } from "../users/session";
 
 
 const PostReview = () => {
-    const { data: session }  = useSession()
+    const userSession = getUserSession()
     const router = useRouter()
-    if (session === null)  router.push("/accounts/login")
+    if (userSession === null) router.push("/accounts/login")
 
     const [imageUpload, setImageUpload] = useState<File | undefined>()
     const handleSelectedImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,14 +23,14 @@ const PostReview = () => {
     const handleUploadImage = () => {
         if (imageUpload === undefined) return
         const id = uploadReview(
-            "hairuilin",
-            session?.user?.image ?? "placeholder image",
+            userSession!.user.username,
+            userSession!.user.userProfileImageUrl,
             imageUpload,
             1,
             "hairui's random post",
         )
     }
-    
+
     return (
         <div className="flex items-end justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pb-5 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">

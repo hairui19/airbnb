@@ -1,9 +1,6 @@
 import { getSession, useSession } from "next-auth/react";
 import { GetServerSidePropsContext } from 'next'
 import { ChangeEvent, useState } from "react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../firebase";
-import { uuidv4 } from "@firebase/util";
 import { uploadReview } from "../services/ReviewsService";
 import { useRouter } from "next/router";
 import { getUserSession } from "../users/session";

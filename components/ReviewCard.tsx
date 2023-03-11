@@ -27,7 +27,7 @@ const ReviewCard = ({
                     src={itemImageUrl}
                     layout="fill"
                     objectFit="cover"
-                    className=" rounded-sm"
+                    className=" rounded-lg"
                 />
             </div>
 

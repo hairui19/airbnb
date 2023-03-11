@@ -14,7 +14,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
             <main className=" max-w-7xl mx-auto px-8 sm:px-1 pt-2 flex justify-center">
                 <div className="inline-grid grid-cols-3 grid-flow-auto gap-y-12 gap-x-4 auto-cols-max">
                     {/** Flex boxes */}
-                    <div className="flex-inline flex-col">
+                    <div className="inline-flex flex-col gap-10">
                         {reviews
                             .filter((_, index) => index % 3 == 0)
                             .map((review) => {
@@ -30,7 +30,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                 )
                             })}
                     </div>
-                    <div className="flex-inline flex-col">
+                    <div className="inline-flex flex-col gap-10">
                         {reviews
                             .filter((_, index) => index % 3 == 1)
                             .map((review) => {
@@ -46,7 +46,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                 )
                             })}
                     </div>
-                    <div className="flex-inline flex-col">
+                    <div className="inline-flex flex-col gap-10">
                         {reviews
                             .filter((_, index) => index % 3 == 2)
                             .map((review) => {

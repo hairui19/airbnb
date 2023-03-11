@@ -21,7 +21,7 @@ const ReviewCard = ({
     itemReview }: Review) => {
     const numberOfRatings = 5;
     return (
-        <div className="flex flex-col items-center overflow-clip w-80 relative cursor-pointer hover:scale-105 transition transform duration-300 ease-out">
+        <div className="flex flex-col items-center overflow-clip w-80 relative cursor-pointer hover:scale-[102%] transition transform duration-300 ease-out">
             <div className="relative w-full h-80">
                 <Image
                     src={itemImageUrl}

@@ -53,7 +53,7 @@ const PostReview = () => {
                     </div>
 
                     <div className="mt-4">
-                        <RatingStars onChange={handRatingSelect} />
+                        <RatingStars initialRating={0} allowSelection={true} onChange={handRatingSelect} />
                     </div>
 
                     <textarea

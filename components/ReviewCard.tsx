@@ -6,6 +6,7 @@ import {
     StarIcon as StarIconOutline,
 } from '@heroicons/react/24/outline'
 import { Review } from "../services/ReviewsService";
+import RatingStars from "./RatingStars";
 
 interface ReviewCardProps {
     imageURL: string,
@@ -44,9 +45,7 @@ const ReviewCard = ({
                 <h3 className=" p-1">{username}</h3>
 
                 <div className="flex space-x-1 ">
-                    {Array(numberOfRatings).fill(null).map((_, index) =>
-                        <StarIconSolid key={index} className="h-6" />
-                    )}
+                    <RatingStars initialRating={itemRating} allowSelection={false} onChange={()=> {}} />
                 </div>
             </div>
 

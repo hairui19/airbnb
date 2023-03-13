@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { uuidv4 } from "@firebase/util";
@@ -11,7 +11,8 @@ export interface Review {
   itemReview: string;
 }
 
-const reviewCollectionRef = collection(db, "reviews");
+const reviewCollectionName = "reviews";
+const reviewCollectionRef = collection(db, reviewCollectionName);
 const reivewImageDir = "review_images/";
 
 export const getReviews = async (): Promise<[string, Review][]> => {
@@ -20,6 +21,18 @@ export const getReviews = async (): Promise<[string, Review][]> => {
       return [doc.id, { ...doc.data() } as Review];
     });
   });
+};
+
+export const getReviewById = async (id: string): Promise<Review | null> => {
+  const docRef = doc(db, reviewCollectionName, id);
+  const snapshot = await getDoc(docRef);
+
+  if (snapshot.exists()) {
+    const reviewData = snapshot.data();
+    return { ...reviewData } as Review;
+  } else {
+    return null;
+  }
 };
 
 export const uploadReview = async (

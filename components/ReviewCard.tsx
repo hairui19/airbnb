@@ -10,7 +10,7 @@ import RatingStars from "./RatingStars";
 
 interface ReviewCardProps {
     review: Review,
-    onClick: () => void
+    onClick?: () => void
 }
 
 const ReviewCard = ({

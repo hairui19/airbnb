@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next"
 import InfoCard from "../components/InfoCard"
 
 const Search = ({ searchResults }: Props) => {
-    console.log("hello world" + searchResults)
+    
     const router = useRouter();
     const { location, startDate, endDate, numberOfGuests } = router.query
 

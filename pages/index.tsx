@@ -89,11 +89,14 @@ const Home: NextPage<HomeData> = (homeData: HomeData) => {
             {homeData?.homeCards.map(homeCard => (
               <ReviewCard
                 key={homeCard.title}
-                username={"hairuilin-hard"}
-                userProfileImageUrl={homeCard.img}
-                itemImageUrl={homeCard.img}
-                itemRating={2}
-                itemReview={"this is a hardcoded item review, could it be so"}
+                review={{
+                  username: "hairuilin-hard",
+                  userProfileImageUrl: homeCard.img,
+                  itemImageUrl: homeCard.img,
+                  itemRating: 2,
+                  itemReview: "this is a hardcoded item review, could it be so"
+                }
+                }
               />
             ))}
           </div>

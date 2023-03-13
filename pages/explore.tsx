@@ -10,6 +10,16 @@ interface ExplorePageProps {
 
 const Explore = ({ reviews }: ExplorePageProps) => {
     const router = useRouter()
+
+    const onReviewClick = (reviewId: string) => {
+        router.push({
+            pathname: "/review_details",
+            query: {
+                reviewId: reviewId
+            }
+        })
+    }
+
     return (
         <div>
             <Header />
@@ -24,7 +34,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                     <ReviewCard
                                         key={review[0]}
                                         review={review[1]}
-                                        onClick={() => { console.log(router.push("review_details")) }}
+                                        onClick={() => { onReviewClick(review[0]) }}
                                     />
                                 )
                             })}
@@ -37,7 +47,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                     <ReviewCard
                                         key={review[0]}
                                         review={review[1]}
-                                        onClick={() => { router.push("review_details") }}
+                                        onClick={() => { onReviewClick(review[0]) }}
                                     />
                                 )
                             })}
@@ -50,7 +60,7 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                     <ReviewCard
                                         key={review[0]}
                                         review={review[1]}
-                                        onClick={() => { router.push("review_details") }}
+                                        onClick={() => { onReviewClick(review[0]) }}
                                     />
                                 )
                             })}

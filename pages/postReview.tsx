@@ -13,6 +13,7 @@ const PostReview = () => {
     const router = useRouter()
     if (userSession === null) router.push("/accounts/login")
 
+    const [isUploading, setIsUploading] = useState(false)
     const [imageUpload, setImageUpload] = useState<File | null>(null);
     const handleImageSelect = (image: File) => {
         setImageUpload(image);
@@ -28,15 +29,23 @@ const PostReview = () => {
         setRating(rating)
     }
 
-    const handleUploadImage = () => {
+    const handleUploadImage = async () => {
         if (imageUpload === null) return
-        const id = uploadReview(
-            userSession!.user.username,
-            userSession!.user.userProfileImageUrl,
-            imageUpload,
-            rating,
-            reviewtext,
-        )
+        setIsUploading(true)
+        try {
+            await uploadReview(
+                userSession!.user.username,
+                userSession!.user.userProfileImageUrl,
+                imageUpload,
+                rating,
+                reviewtext,
+            )
+            router.push("/")
+        } catch (error) {
+            console.error(error);
+            alert('There was an error uploading your file. Please try again.');
+            setIsUploading(false);
+        }
     }
 
     return (
@@ -64,7 +73,7 @@ const PostReview = () => {
                 </div>
 
                 <div className="mt-5 sm:mt-6">
-                    <button onClick={handleUploadImage} disabled={!imageUpload || reviewtext.length < 15 || rating === 0} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
+                    <button onClick={handleUploadImage} disabled={!imageUpload || reviewtext.length < 15 || rating === 0 || isUploading} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm disabled:cursor-not-allowed disabled:bg-gray-300">
                         Upload Review
                     </button>

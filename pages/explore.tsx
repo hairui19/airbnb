@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next"
+import { useRouter } from "next/router"
 import Header from "../components/Header"
 import ReviewCard from "../components/ReviewCard"
 import { getReviews, Review } from "../services/ReviewsService"
@@ -8,6 +9,7 @@ interface ExplorePageProps {
 }
 
 const Explore = ({ reviews }: ExplorePageProps) => {
+    const router = useRouter()
     return (
         <div>
             <Header />
@@ -21,11 +23,8 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                 return (
                                     <ReviewCard
                                         key={review[0]}
-                                        username={review[1].username}
-                                        userProfileImageUrl={review[1].userProfileImageUrl}
-                                        itemImageUrl={review[1].itemImageUrl}
-                                        itemRating={review[1].itemRating}
-                                        itemReview={review[1].itemReview}
+                                        review={review[1]}
+                                        onClick={() => { console.log(router.push("review_details")) }}
                                     />
                                 )
                             })}
@@ -37,11 +36,8 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                 return (
                                     <ReviewCard
                                         key={review[0]}
-                                        username={review[1].username}
-                                        userProfileImageUrl={review[1].userProfileImageUrl}
-                                        itemImageUrl={review[1].itemImageUrl}
-                                        itemRating={review[1].itemRating}
-                                        itemReview={review[1].itemReview}
+                                        review={review[1]}
+                                        onClick={() => { router.push("review_details") }}
                                     />
                                 )
                             })}
@@ -53,11 +49,8 @@ const Explore = ({ reviews }: ExplorePageProps) => {
                                 return (
                                     <ReviewCard
                                         key={review[0]}
-                                        username={review[1].username}
-                                        userProfileImageUrl={review[1].userProfileImageUrl}
-                                        itemImageUrl={review[1].itemImageUrl}
-                                        itemRating={review[1].itemRating}
-                                        itemReview={review[1].itemReview}
+                                        review={review[1]}
+                                        onClick={() => { router.push("review_details") }}
                                     />
                                 )
                             })}

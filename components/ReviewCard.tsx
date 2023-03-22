@@ -43,9 +43,9 @@ const ReviewCard = ({
                     <RatingStars initialRating={review.itemRating} allowSelection={false} onChange={() => { }} />
                 </div>
             </div>
-
-            <div className="pt-20">
-                {review.itemReview}
+            <div className="pt-20 self-stretch">
+                <p className=" text-left text-xl font-semibold truncate overflow-hidden overflow-ellipsis">{review.reviewTitle}</p>
+                <p>{review.itemReview}</p>
             </div>
 
         </div>

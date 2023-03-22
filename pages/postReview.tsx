@@ -19,6 +19,12 @@ const PostReview = () => {
         setImageUpload(image);
     }
 
+    const [reviewTitle, setReviewTitle] = useState('')
+    const handleReviewTitle = (event: React.FormEvent<HTMLTextAreaElement>) => {
+        setReviewText(event.currentTarget.value)
+    }
+
+
     const [reviewtext, setReviewText] = useState('');
     const handleReviewText = (event: React.FormEvent<HTMLTextAreaElement>) => {
         setReviewText(event.currentTarget.value)
@@ -61,19 +67,32 @@ const PostReview = () => {
                         <ImagePreview onImageSelect={handleImageSelect} />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-2">
+                        <label className="text-sm block text-gray-700">Rate your item</label>
                         <RatingStars initialRating={0} allowSelection={true} onChange={handRatingSelect} />
                     </div>
 
-                    <textarea
-                        className="mt-2 h-100 border border-gray-300 rounded-lg p-2 w-full"
-                        placeholder="Please enter your review here"
-                        onInput={handleReviewText}
-                    ></textarea>
+                    <div className="mt-2">
+                        <label className="text-sm block text-gray-700">Title of your review</label>
+                        <textarea
+                            className="mt-2 h-11 border border-gray-300 rounded-lg p-2 w-full"
+                            placeholder="Example: What a great camera!"
+                            onInput={handleReviewTitle}
+                        ></textarea>
+                    </div>
+
+                    <div className="mt-2">
+                        <label className="text-sm block text-gray-700">Review your item</label>
+                        <textarea
+                            className="mt-2 h-32 border border-gray-300 rounded-lg p-2 w-full"
+                            placeholder="Please enter your review here"
+                            onInput={handleReviewText}
+                        ></textarea>
+                    </div>
                 </div>
 
                 <div className="mt-5 sm:mt-6">
-                    <button onClick={handleUploadImage} disabled={!imageUpload || reviewtext.length < 15 || rating === 0 || isUploading} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
+                    <button onClick={handleUploadImage} disabled={!imageUpload || reviewTitle.length < 15 || reviewtext.length < 15 || rating === 0 || isUploading} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm disabled:cursor-not-allowed disabled:bg-gray-300">
                         Upload Review
                     </button>

@@ -37,15 +37,20 @@ const ReviewCard = ({
                     />
                 </div>
 
-                <h3 className=" p-1">{review.username}</h3>
+                <h3 className="truncate overflow-hidden overflow-ellipsis p-1">{"by: " + review.username}</h3>
 
                 <div className="flex space-x-1 ">
                     <RatingStars initialRating={review.itemRating} allowSelection={false} onChange={() => { }} />
                 </div>
             </div>
             <div className="pt-20 self-stretch">
-                <p className=" text-left text-xl font-semibold truncate overflow-hidden overflow-ellipsis">{review.reviewTitle}</p>
-                <p>{review.itemReview}</p>
+                <p className=" text-left text-lg font-semibold truncate overflow-hidden overflow-ellipsis">{review.reviewTitle}</p>
+                <p
+                    className="text-sm leading-5 text-gray-500 overflow-hidden"
+                    style={{ WebkitLineClamp: 3, display: '-webkit-box', WebkitBoxOrient: 'vertical' }}
+                >
+                    {review.itemReview}
+                </p>
             </div>
 
         </div>

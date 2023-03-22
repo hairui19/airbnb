@@ -94,6 +94,7 @@ const Home: NextPage<HomeData> = (homeData: HomeData) => {
                   userProfileImageUrl: homeCard.img,
                   itemImageUrl: homeCard.img,
                   itemRating: 2,
+                  reviewTitle: "this great",
                   itemReview: "this is a hardcoded item review, could it be so"
                 }
                 }

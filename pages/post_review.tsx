@@ -21,7 +21,7 @@ const PostReview = () => {
 
     const [reviewTitle, setReviewTitle] = useState('')
     const handleReviewTitle = (event: React.FormEvent<HTMLTextAreaElement>) => {
-        setReviewText(event.currentTarget.value)
+        setReviewTitle(event.currentTarget.value)
     }
 
 
@@ -44,6 +44,7 @@ const PostReview = () => {
                 userSession!.user.userProfileImageUrl,
                 imageUpload,
                 rating,
+                reviewTitle,
                 reviewtext,
             )
             router.push("/")

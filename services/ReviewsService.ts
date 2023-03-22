@@ -8,6 +8,7 @@ export interface Review {
   userProfileImageUrl: string;
   itemImageUrl: string;
   itemRating: number;
+  reviewTitle: string, 
   itemReview: string;
 }
 
@@ -40,6 +41,7 @@ export const uploadReview = async (
   userProfileImageUrl: string,
   itemImage: File,
   itemRating: number,
+  reivewTitle: string,
   itemReview: string
 ): Promise<string> => {
   const storageRef = ref(storage, reivewImageDir + `${uuidv4()}`);
@@ -53,6 +55,7 @@ export const uploadReview = async (
     userProfileImageUrl: userProfileImageUrl,
     itemImageUrl: itemImageUrl,
     itemRating: itemRating,
+    reviewTitle: reivewTitle,
     itemReview: itemReview,
   }).then((document) => {
     return document.id;
